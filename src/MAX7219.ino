@@ -3,6 +3,7 @@
 
 //We always have to include the library
 #include "LedControl.h"
+#include <Wire.h>
 
 /*
  Now we need a LedControl to work with.
@@ -14,8 +15,23 @@
  */
 LedControl lc=LedControl(12,10,11,1);
 
+int FrontLight=0;
+
 unsigned long delaytime1=50;
 unsigned long delaytime2=200;
+
+
+void receiveEvent(int FrontLight)
+{
+  while(Wire.available()){
+    FrontLight = Wire.read();
+  }	
+
+  digitalWrite(2,FrontLight);
+}
+
+
+
 void setup() {
   /*
     Der MAX72XX ist im Power-Save-Modus beim Start,
@@ -27,6 +43,8 @@ void setup() {
   /* and clear the display */
   lc.clearDisplay(0);
   pinMode(2,OUTPUT);
+  Wire.begin(8);
+  Wire.onReceive(receiveEvent);
 }
 
 /*
@@ -79,14 +97,8 @@ void writeArduinoOnMatrix() {
 
 
 void loop() { 
-  static int i=0;
-
+  
   writeArduinoOnMatrix();
   
-  if (i>2) {
-    digitalWrite(2,digitalRead(2)^1);
-    i=0;
-  }
-  i++;
-
+  
 }
