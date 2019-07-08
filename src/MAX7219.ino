@@ -16,10 +16,11 @@
 LedControl lc=LedControl(12,10,11,1);
 
 int FrontLight=0;
-int LeftTurnLight=0;
+int SteeringAngle=0;
 
 int FrontLightPin = 2;
 int LeftTurnLightPin = 9;
+int RightTurnLightPin = 8;
 
 unsigned long delaytime1=50;
 unsigned long delaytime2=200;
@@ -30,7 +31,7 @@ void receiveEvent(int FrontLight)
   while(1<Wire.available()){
     FrontLight = Wire.read();
   }
-  LeftTurnLight = Wire.read();
+  SteeringAngle = Wire.read();
 
   digitalWrite(FrontLightPin,FrontLight);
 }
@@ -49,6 +50,7 @@ void setup() {
   lc.clearDisplay(0);
   pinMode(FrontLightPin,OUTPUT);
   pinMode(LeftTurnLightPin,OUTPUT);
+  pinMode(RightTurnLightPin,OUTPUT);
   Wire.begin(8);
   Wire.onReceive(receiveEvent);
 }
@@ -67,6 +69,7 @@ void writeArduinoOnMatrix() {
   byte e[8]={B11111111,B11111111,B11111111,B11111111,B11111111,B11111111,B11111111,B11111111};
   
    digitalWrite(LeftTurnLightPin,LOW);
+   digitalWrite(RightTurnLightPin,LOW);
 
  
   /* Zeigen sie nun eins nach dem anderen mit einer kleinen Verzögerung an */
@@ -90,7 +93,8 @@ void writeArduinoOnMatrix() {
     lc.setRow(0,i,e[i]);
   };
 
-  digitalWrite(LeftTurnLightPin,LeftTurnLight);
+  if (SteeringAngle < 80) digitalWrite(LeftTurnLightPin,HIGH);
+  if (SteeringAngle > 100) digitalWrite(RightTurnLightPin,HIGH);
 
   delay(delaytime1);
   for (int i=0;i<8;i++) {
