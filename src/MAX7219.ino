@@ -16,6 +16,7 @@ int SteeringAngle = 0;
 int Speed = 0;
 
 int FrontLightPin = 2;
+int BackLightPin = 7;
 int LeftTurnLightPin = 9;
 int RightTurnLightPin = 8;
 
@@ -33,6 +34,7 @@ void receiveEvent(int FrontLight)
   Speed = Wire.read();
 
   digitalWrite(FrontLightPin, FrontLight);
+  digitalWrite(BackLightPin, FrontLight);
 }
 
 void setup()
@@ -47,6 +49,7 @@ void setup()
   /* and clear the display */
   lc.clearDisplay(0);
   pinMode(FrontLightPin, OUTPUT);
+  pinMode(BackLightPin, OUTPUT);
   pinMode(LeftTurnLightPin, OUTPUT);
   pinMode(RightTurnLightPin, OUTPUT);
   Wire.begin(8);
