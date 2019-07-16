@@ -17,8 +17,8 @@ int Speed = 0;
 
 int FrontLightPin = 2;
 int BackLightPin = 7;
-int LeftTurnLightPin = 9;
-int RightTurnLightPin = 8;
+int LeftTurnLightPin = 8;
+int RightTurnLightPin = 9;
 
 unsigned long delaytime1 = 50;
 unsigned long delaytime2 = 200;
