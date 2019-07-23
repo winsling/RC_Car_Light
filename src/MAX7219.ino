@@ -19,6 +19,9 @@ int FrontLightPin = 2;
 int BackLightPin = 7;
 int LeftTurnLightPin = 8;
 int RightTurnLightPin = 9;
+int BlueLightPin = 3;
+
+
 
 unsigned long delaytime1 = 50;
 unsigned long delaytime2 = 200;
@@ -52,8 +55,10 @@ void setup()
   pinMode(BackLightPin, OUTPUT);
   pinMode(LeftTurnLightPin, OUTPUT);
   pinMode(RightTurnLightPin, OUTPUT);
+  pinMode(BlueLightPin,OUTPUT);
   Wire.begin(8);
   Wire.onReceive(receiveEvent);
+  digitalWrite(BlueLightPin,HIGH);
 }
 
 /*
