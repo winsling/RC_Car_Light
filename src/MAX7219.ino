@@ -13,6 +13,7 @@ LedControl lc = LedControl(12, 10, 11, 1);
 
 int FrontLight = 0;
 int SteeringAngle = 0;
+bool Obst_Detect;
 int Speed = 0;
 
 int FrontLightPin = 2;
@@ -32,6 +33,7 @@ void receiveEvent(int FrontLight)
   {
     FrontLight = Wire.read();
     SteeringAngle = Wire.read();
+    Obst_Detect = Wire.read();
   }
 
   Speed = Wire.read();
@@ -58,7 +60,7 @@ void setup()
   pinMode(BlueLightPin,OUTPUT);
   Wire.begin(8);
   Wire.onReceive(receiveEvent);
-  digitalWrite(BlueLightPin,HIGH);
+  digitalWrite(BlueLightPin,Obst_Detect);
 }
 
 /*
@@ -114,21 +116,25 @@ void writeArduinoOnMatrix()
   {
     lc.setRow(0, i, a[i]);
   };
+  digitalWrite(BlueLightPin,LOW);
   delay(delaytime1);
   for (int i = 0; i < 8; i++)
   {
     lc.setRow(0, i, b[i]);
   };
+  digitalWrite(BlueLightPin,Obst_Detect);
   delay(delaytime1);
   for (int i = 0; i < 8; i++)
   {
     lc.setRow(0, i, c[i]);
   };
+  digitalWrite(BlueLightPin,LOW);
   delay(delaytime1);
   for (int i = 0; i < 8; i++)
   {
     lc.setRow(0, i, d[i]);
   };
+  digitalWrite(BlueLightPin,Obst_Detect);
   delay(delaytime1);
   for (int i = 0; i < 8; i++)
   {
@@ -140,21 +146,25 @@ void writeArduinoOnMatrix()
   if (SteeringAngle > 100)
     digitalWrite(RightTurnLightPin, HIGH);
 
+  digitalWrite(BlueLightPin,LOW);
   delay(delaytime1);
   for (int i = 0; i < 8; i++)
   {
     lc.setRow(0, i, d[i]);
   };
+  digitalWrite(BlueLightPin,Obst_Detect);
   delay(delaytime1);
   for (int i = 0; i < 8; i++)
   {
     lc.setRow(0, i, c[i]);
   };
+  digitalWrite(BlueLightPin,LOW);
   delay(delaytime1);
   for (int i = 0; i < 8; i++)
   {
     lc.setRow(0, i, b[i]);
   };
+  digitalWrite(BlueLightPin,Obst_Detect);
   delay(delaytime1);
 }
 
