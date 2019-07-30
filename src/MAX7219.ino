@@ -141,9 +141,9 @@ void writeArduinoOnMatrix()
     lc.setRow(0, i, e[i]);
   };
 
-  if (SteeringAngle < 80)
+  if (SteeringAngle < 90)
     digitalWrite(LeftTurnLightPin, HIGH);
-  if (SteeringAngle > 100)
+  if (SteeringAngle > 130)
     digitalWrite(RightTurnLightPin, HIGH);
 
   digitalWrite(BlueLightPin,LOW);
